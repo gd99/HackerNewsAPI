@@ -16,7 +16,7 @@ A dictionary is used to keep the order of the stories, as the return of the hack
 
 
 While testing the API's, I noticed the returned value of "descendants" didn't match the exact number of comments when you exhaust the recursive list of "kids" from a given story, which leads me to believe this value gets updated on a delay, and isn't live.
-Therefore I added in the query parameter "liveCommentCount" which get the current exhaustive count of comments. 
+Therefore I added in the query parameter "liveCommentCount" which get the current exhaustive count of comments. This is of course much slower, as many recursive API calls are made. 
 
 
 
@@ -25,3 +25,5 @@ Further changes to make
 - Authorisation can be added 
 - Unit tests are quite basic and more could be added
 - Helm or terraform could be used to improve deployment into cloud 
+- Logging has been kept basic and structured logger like serilog would be an improvement 
+
