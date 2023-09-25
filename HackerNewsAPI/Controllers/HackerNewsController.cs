@@ -22,7 +22,7 @@ namespace HackerNewsAPI.Controllers
         [HttpGet]
         public async Task<List<HackerNewsResult>> GetBestStoryV0(int storyCount = 1, bool liveCommentCount = false)
         {
-            _logger.LogInformation("Firebase best stories call inititated for {0} stories, version 0, liveCommentCount {1}", storyCount, liveCommentCount);
+            _logger.LogInformation("HackerNews best stories call inititated for {0} stories, version 0, liveCommentCount {1}", storyCount, liveCommentCount);
 
             try
             {

@@ -38,11 +38,11 @@ namespace HackerNewsApiTests.Services
 
             var appSettings = @"{ 
     ""ConnectionStrings"": {
-    ""FirebaseBestStories"": ""https://hacker-news.firebaseio.com/v{0}/beststories.json"",
-    ""FirebaseItems"": ""https://hacker-news.firebaseio.com/v{0}/item/{1}.json""
+    ""HackerNewsBestStories"": ""https://hacker-news.firebaseio.com/v{0}/beststories.json"",
+    ""HackerNewsItems"": ""https://hacker-news.firebaseio.com/v{0}/item/{1}.json""
     },
   ""HttpClient"": { ""MaxSocketPoolSize"": 10 },
-  ""FirebaseManager"": { ""MaxParallelism"": 10 }
+  ""HackerNewsManager"": { ""MaxParallelism"": 10 }
             }";
 
             var builder = new ConfigurationBuilder();

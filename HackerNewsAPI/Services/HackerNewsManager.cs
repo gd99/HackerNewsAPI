@@ -8,8 +8,8 @@ namespace HackerNewsAPI.Services
         private readonly ILogger _logger;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        private string _firebaseBestStoriesUrl;
-        private string _firebaseItemsUrl;
+        private string _hackerNewsBestStoriesUrl;
+        private string _hackerNewsItemsUrl;
         private ParallelOptions _parallelOptions;
         
 
@@ -17,15 +17,15 @@ namespace HackerNewsAPI.Services
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
-            _firebaseBestStoriesUrl = configuration.GetConnectionString("FirebaseBestStories")!;
-            _firebaseItemsUrl = configuration.GetConnectionString("FirebaseItems")!;
-            _parallelOptions = new() { MaxDegreeOfParallelism = configuration.GetValue<int>("FirebaseManager:MaxParallelism") };
+            _hackerNewsBestStoriesUrl = configuration.GetConnectionString("HackerNewsBestStories")!;
+            _hackerNewsItemsUrl = configuration.GetConnectionString("HackerNewsItems")!;
+            _parallelOptions = new() { MaxDegreeOfParallelism = configuration.GetValue<int>("HackerNewsManager:MaxParallelism") };
         }
 
         public async Task<List<HackerNewsResult>> RetrieveStoryDataAsync(int storyCount, int version, bool liveCommentCount)
         {
             var http = _httpClientFactory.CreateClient("HackerNews");
-            var bestStoriesURL = string.Format(_firebaseBestStoriesUrl, version, storyCount);
+            var bestStoriesURL = string.Format(_hackerNewsBestStoriesUrl, version, storyCount);
 
             var ids = (await http.GetFromJsonAsync<List<int>>(bestStoriesURL)).Take(storyCount).ToList();
 
@@ -36,7 +36,7 @@ namespace HackerNewsAPI.Services
 
             await Parallel.ForEachAsync(ids, _parallelOptions, async (id, token) =>
             {
-                var itemUrl = string.Format(_firebaseItemsUrl, version, id);
+                var itemUrl = string.Format(_hackerNewsItemsUrl, version, id);
 
                 var item = await http.GetFromJsonAsync<HackerNewsItem>(itemUrl);
 
@@ -71,7 +71,7 @@ namespace HackerNewsAPI.Services
             {
                 await Parallel.ForEachAsync(responseParent.Kids, _parallelOptions, async (kidId, token) =>
                 {
-                    var itemUrl = string.Format(_firebaseItemsUrl, version, kidId);
+                    var itemUrl = string.Format(_hackerNewsItemsUrl, version, kidId);
 
                     var response = await http.GetFromJsonAsync<HackerNewsItem>(itemUrl, token);
 
