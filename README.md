@@ -26,4 +26,6 @@ Further changes to make
 - Unit tests are quite basic and more could be added
 - Helm or terraform could be used to improve deployment into cloud 
 - Logging has been kept basic and structured logger like serilog would be an improvement 
-
+- understand end user so any exceptions can have better messages 
+- implement health status
+- implement better usage stats for an elk stack style monitoring 
