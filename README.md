@@ -2,10 +2,10 @@
 
 # C# .NET Core Web API to access HackerNews top stories 
 
-###Into 
+### Intro 
 This project launches a web API to retrieve the top N stories from Hackernews. It can be run locally using visual studio, or the dockerfile instructions can be followed to run from docker. 
 
-###How it works
+### How it works
 It will run an OpenAI page, where the user can use the best stories V0 api, the user can select the number of stories to be returned. 
 
 Interally it will call the best stories API, retrieving the IDs, which will then be cut down to the users specified amount. 
@@ -22,7 +22,7 @@ Therefore I added in the query parameter "liveCommentCount" which get the curren
 
 
 
-###Further changes to make 
+### Further changes to make 
 - I set the maximum http pool size to 10, but this could be higher. Some usage testing would give the optimal rate to set it. 
 - Authorisation can be added 
 - Unit tests are quite basic and more could be added
