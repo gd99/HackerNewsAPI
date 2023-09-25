@@ -31,3 +31,4 @@ Therefore I added in the query parameter "liveCommentCount" which get the curren
 - understand end user so any exceptions can have better messages 
 - implement health status
 - implement better usage stats for an elk stack style monitoring 
+- requirements state serving large numbers of requests, so possibly running multiple services with a load balancer would be required, assuming hackernews can handle it
