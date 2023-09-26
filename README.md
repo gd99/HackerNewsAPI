@@ -28,10 +28,11 @@ Therefore I added in the query parameter "liveCommentCount" which get the curren
 - Unit tests are quite basic and more could be added
 - Helm or terraform could be used to improve deployment into cloud 
 - Logging has been kept basic and structured logger like serilog would be an improvement 
-- understand end user so any exceptions can have better messages 
+- understand end user so any exceptions can have better messages on failure 
 - implement health status
 - implement usage stats for an elk stack style monitoring 
 - requirements state serving large numbers of requests, so possibly running multiple services with a load balancer would be required, assuming hackernews can handle it
+- caching could be a possibility based on requirements 
 - variable fields returned via API might warrant nullable/optional fields for robustness
 - setup project within ci/cd environment such as gitlab or jenkins 
 - create dev uat and prod env configs 
