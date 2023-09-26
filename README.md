@@ -33,3 +33,4 @@ Therefore I added in the query parameter "liveCommentCount" which get the curren
 - implement usage stats for an elk stack style monitoring 
 - requirements state serving large numbers of requests, so possibly running multiple services with a load balancer would be required, assuming hackernews can handle it
 - variable fields returned via API might warrant nullable/optional fields for robustness
+- setup project within ci/cd environment such as gitlab or jenkins 
