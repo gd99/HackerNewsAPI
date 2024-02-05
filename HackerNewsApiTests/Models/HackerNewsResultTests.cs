@@ -18,7 +18,7 @@ namespace HackerNewsApiTests.Models
 
             Assert.AreEqual(item.Title, result.title);
             Assert.AreEqual(item.Url, result.uri);
-            Assert.AreEqual(item.Time, result.time);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(item.Time).DateTime.ToString("yyyy-MM-ddTHH:mm:sszzz"), result.time);
             Assert.AreEqual(item.Score, result.score);
             Assert.AreEqual(item.Descendants, result.commentCount);
         }
@@ -32,7 +32,7 @@ namespace HackerNewsApiTests.Models
 
             Assert.AreEqual(item.Title, result.title);
             Assert.AreEqual(item.Url, result.uri);
-            Assert.AreEqual(item.Time, result.time);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(item.Time).DateTime.ToString("yyyy-MM-ddTHH:mm:sszzz"), result.time);
             Assert.AreEqual(item.Score, result.score);
             Assert.AreEqual(88, result.commentCount);
         }

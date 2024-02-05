@@ -5,6 +5,7 @@ namespace HackerNewsAPI.Services
 {
     public class HackerNewsManager : IHackerNewsManager
     {
+        private const string HttpClientName = "HackerNews";
         private readonly ILogger _logger;
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -24,7 +25,7 @@ namespace HackerNewsAPI.Services
 
         public async Task<List<HackerNewsResult>> RetrieveStoryDataAsync(int storyCount, int version, bool liveCommentCount)
         {
-            var http = _httpClientFactory.CreateClient("HackerNews");
+            var http = _httpClientFactory.CreateClient(HttpClientName);
             var bestStoriesURL = string.Format(_hackerNewsBestStoriesUrl, version, storyCount);
 
             var ids = (await http.GetFromJsonAsync<List<int>>(bestStoriesURL)).Take(storyCount).ToList();
