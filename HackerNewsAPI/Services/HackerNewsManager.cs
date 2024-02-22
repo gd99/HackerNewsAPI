@@ -1,6 +1,5 @@
 ﻿using HackerNewsAPI.Models;
 using System.Collections.Concurrent;
-using System.Net.Http;
 
 namespace HackerNewsAPI.Services
 {
@@ -44,7 +43,7 @@ namespace HackerNewsAPI.Services
                 if (liveCommentCount)
                 {
                     _logger.LogInformation("Getting live comment count");
-                    var calculatedCommentCount = await GetLiveCommentCount(item, version, http);
+                    var calculatedCommentCount = await GetLiveCommentCountAsync(item, version, http);
                     resultDict[id] = HackerNewsResult.FromHackerNewsItem(item, calculatedCommentCount);
                 }
                 else
@@ -58,7 +57,7 @@ namespace HackerNewsAPI.Services
             return resultDict.Values.ToList();
         }
 
-        private async Task<int> GetLiveCommentCount(HackerNewsItem responseParent, int version, HttpClient http)
+        private async Task<int> GetLiveCommentCountAsync(HackerNewsItem responseParent, int version, HttpClient http)
         {
             int commentCount = 0;
             
@@ -75,7 +74,7 @@ namespace HackerNewsAPI.Services
 
                     var response = await http.GetFromJsonAsync<HackerNewsItem>(itemUrl, token);
 
-                    int belowCount = await GetLiveCommentCount(response, version, http);
+                    int belowCount = await GetLiveCommentCountAsync(response, version, http);
 
                     Interlocked.Add(ref commentCount, belowCount);
                 });
