@@ -1,4 +1,5 @@
 ﻿using HackerNewsAPI.Models;
+using System.Collections.Concurrent;
 using System.Net.Http;
 
 namespace HackerNewsAPI.Services
@@ -28,12 +29,11 @@ namespace HackerNewsAPI.Services
             var http = _httpClientFactory.CreateClient(HttpClientName);
             var bestStoriesURL = string.Format(_hackerNewsBestStoriesUrl, version, storyCount);
 
-            var ids = (await http.GetFromJsonAsync<List<int>>(bestStoriesURL)).Take(storyCount).ToList();
+            var ids = (await http.GetFromJsonAsync<List<int>>(bestStoriesURL)).Take(storyCount);
 
-            var resultDict = new Dictionary<int, HackerNewsResult>();
-            ids.ForEach(id => resultDict.Add(id, null));
-
-            _logger.LogInformation("Retrieved {0} best story ids from url {1}", ids.Count, bestStoriesURL);
+            var resultDict = new ConcurrentDictionary<int, HackerNewsResult>();
+                        
+            _logger.LogInformation("Retrieved best story ids from url {1}", bestStoriesURL);
 
             await Parallel.ForEachAsync(ids, _parallelOptions, async (id, token) =>
             {
@@ -61,8 +61,7 @@ namespace HackerNewsAPI.Services
         private async Task<int> GetLiveCommentCount(HackerNewsItem responseParent, int version, HttpClient http)
         {
             int commentCount = 0;
-            object objLock = new object();
-
+            
             if (responseParent.Type == "comment" && !responseParent.Dead)
             {
                 commentCount++;
@@ -78,8 +77,7 @@ namespace HackerNewsAPI.Services
 
                     int belowCount = await GetLiveCommentCount(response, version, http);
 
-                    lock (objLock)
-                        commentCount += belowCount;
+                    Interlocked.Add(ref commentCount, belowCount);
                 });
             }
 
